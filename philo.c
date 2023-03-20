@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 14:29:05 by avancoll          #+#    #+#             */
-/*   Updated: 2023/02/20 15:26:14 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:39:23 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 {
 	pthread_t		th[10];
 
-	mail = 0;
+	int	mail = 0;
 	pthread_mutex_init(&mutex, NULL);
 	if (pthread_create(&t1, NULL, &routine, NULL) != 0)
 		return (1);
