@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:29:20 by avancoll          #+#    #+#             */
-/*   Updated: 2023/03/21 15:22:48 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:10:48 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	init_data(t_data *data, char **argv)
 void	*routine(void *arg)
 {
 	(void)arg;
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 10000000; i++)
 	{
 		pthread_mutex_lock(&mutex);
 		mail++;

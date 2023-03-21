@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 14:29:05 by avancoll          #+#    #+#             */
-/*   Updated: 2023/03/20 17:20:30 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:09:44 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	*routine(void *arg)
 	(void)arg;
 	for (int i = 0; i < 100000; i++)
 	{
-		pthread_mutex_lock(&mutex);
+		// pthread_mutex_lock(&mutex);
 		mail++;
-		pthread_mutex_unlock(&mutex);
+		// pthread_mutex_unlock(&mutex);
 	}
 	return (0);
 }
