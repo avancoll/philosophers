@@ -6,13 +6,13 @@
 #    By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 14:13:45 by avancoll          #+#    #+#              #
-#    Updated: 2023/02/20 14:32:16 by avancoll         ###   ########.fr        #
+#    Updated: 2023/03/21 14:43:35 by avancoll         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = philo.c
+SRCS = main.c
 
 OBJS		= $(SRCS:.c=.o)
 
