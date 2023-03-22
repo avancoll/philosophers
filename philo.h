@@ -33,7 +33,7 @@ typedef	struct s_data
 typedef struct s_philo
 {
 	pthread_t	t;
-	pthread_mutex_t	fork_l;
-	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*right_fork;
 }			t_philo;
 #endif
