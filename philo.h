@@ -30,4 +30,10 @@ typedef	struct s_data
 	int	error;
 }		t_data;
 
+typedef struct s_philo
+{
+	pthread_t	t;
+	pthread_mutex_t	fork_l;
+	pthread_mutex_t	*fork_r;
+}			t_philo;
 #endif
