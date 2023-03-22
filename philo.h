@@ -28,12 +28,13 @@ typedef	struct s_data
 	int	time_to_sleep;
 	int	n_eat;
 	int	error;
+	t_philo	*philo;
 }		t_data;
 
 typedef struct s_philo
 {
 	pthread_t	t;
 	pthread_mutex_t	left_fork;
-	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	right_fork;
 }			t_philo;
 #endif
