@@ -6,14 +6,14 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:29:20 by avancoll          #+#    #+#             */
-/*   Updated: 2023/03/21 18:10:48 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:15:21 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-pthread_mutex_t	mutex;
-int				mail = 0;
+int	counter = 0;
+pthread_mutex_t	lock;
 
 int	ft_atoi(const char *s, t_data *data)
 {
@@ -54,28 +54,31 @@ int	init_data(t_data *data, char **argv)
 	return (0);
 }
 
-void	*routine(void *arg)
+void* routine(void *arg)
 {
 	(void)arg;
-	for (int i = 0; i < 10000000; i++)
-	{
-		pthread_mutex_lock(&mutex);
-		mail++;
-		pthread_mutex_unlock(&mutex);
-	}
-	return (0);
+	pthread_mutex_lock(&lock);
+
+	unsigned long i = 0;
+	counter += 1;
+	printf("\n Job %d started\n", counter);
+	for(i=0; i<(0xFFFFFFFF);i++);
+	printf("\n Job %d finished\n", counter);
+	pthread_mutex_unlock(&lock);
+	return NULL;
 }
 
 int	init_philo(t_data data)
 {
 	int			i;
-	pthread_t	t[data.n_philo];
+	t_philo		philo;
 
+	pthread_mutex_init(&lock, NULL);
 	i = -1;
 	while (++i < data.n_philo)
 	{
-		pthread_create(&t[i], NULL, &routine, NULL);
-		pthread_join(t[i], NULL);//a changer
+		pthread_create(&(philo.t), NULL, &routine, NULL);
+		pthread_join(philo.t, NULL);
 	}
 	return (0);
 }
@@ -90,7 +93,5 @@ int	main(int argc, char **argv)
 		return (1);
 	printf("n_philo = %d\ntime_to_die = %d\ntime_to_eat = %d\ntime_to_sleep = %d\nn_eat = %d\n", data.n_philo, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.n_eat);
 	init_philo(data);
-		printf("mail = %d\n", mail);
-
 	return (0);
 }
