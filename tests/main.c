@@ -6,15 +6,11 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:29:20 by avancoll          #+#    #+#             */
-/*   Updated: 2023/03/29 16:53:42 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:21:11 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	counter = 0;
-pthread_mutex_t	forks[5];
-pthread_t		philosopher[5];
 
 int	init_data(t_data *data, char **argv)
 {
@@ -27,19 +23,6 @@ int	init_data(t_data *data, char **argv)
 	if (data->error)
 		return (1);
 	return (0);
-}
-
-void	*routine(void *arg)
-{
-	(void)arg;
-	pthread_mutex_lock(&forks[0]);
-	counter += 1;
-	unsigned long i = 0;
-	printf("\n Job %d started\n", counter);
-	for(i=0; i<(0xFFFFFFFF);i++);
-	printf("\n Job %d finished\n", counter);
-	pthread_mutex_unlock(&forks[0]);
-	return NULL;
 }
 
 int	init_philo(t_data data)
@@ -59,6 +42,17 @@ int	init_philo(t_data data)
 	return (0);
 }
 
+void init_philo(t_philo *philo, t_data data, it id)
+{
+	philo->id = id;
+	philo->left_fork = data->left_fork;
+	philo->right_fork = data->right_fork;
+	philo->time_to_die = data->time_to_die;
+	philo->time_to_eat = data->time_to_eat;
+	philo->time_to_sleep = data->time_to_sleep;
+	gettimeofday(&(philo->last_meal), NULL);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -67,7 +61,6 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_data(&data, argv))
 		return (1);
-	printf("n_philo = %d\ntime_to_die = %d\ntime_to_eat = %d\ntime_to_sleep = %d\nn_eat = %d\n", data.n_philo, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.n_eat);
 	init_philo(data);
 	return (0);
 }
