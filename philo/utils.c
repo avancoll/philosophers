@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:40:20 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/04 16:29:04 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:15:57 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	ft_atoi(const char *s, t_data *data)
 	return (res * sign);
 }
 
-long	get_current_time(void)
+long	get_current_time(struct timeval start)
 {
-	struct timeval	tv;
+	struct timeval	end;
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	gettimeofday(&end, NULL);
+	return ((end.tv_sec * 1000 + end.tv_usec / 1000) - (start.tv_sec * 1000 + start.tv_usec / 1000));
 }

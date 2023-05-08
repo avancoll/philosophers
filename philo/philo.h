@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 14:15:21 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/04 15:31:07 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:08:43 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	struct timeval	last_meal;
+	struct timeval	time;
 }	t_philo;
 
 int	ft_atoi(const char *s, t_data *data);
-long	get_current_time(void);
-void	pick_up_fork(pthread_mutex_t *fork, int id);
+long	get_current_time(struct timeval start);
+void	pick_up_fork(pthread_mutex_t *fork, int id, struct timeval time);
 void	put_down_fork(pthread_mutex_t *fork);
-void	think(int id);
-void	eat(int id);
+void	think(int id, struct timeval time);
+void	eat(int id, struct timeval time);
 
 #endif

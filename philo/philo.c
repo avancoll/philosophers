@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:28:06 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/04 17:00:03 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:18:39 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,39 +28,40 @@ int	init_data(t_data *data, char **argv)
 void	init_philo(t_philo *philo, int id, pthread_mutex_t *left_fork, pthread_mutex_t *right_fork, int time_to_die, int time_to_eat, int time_to_sleep)
 {
 	philo->id = id;
-	printf("id = %d\n", id);
 	philo->left_fork = left_fork;
 	philo->right_fork = right_fork;
 	philo->time_to_die = time_to_die;
 	philo->time_to_eat = time_to_eat;
 	philo->time_to_sleep = time_to_sleep;
 	gettimeofday(&(philo->last_meal), NULL);
+	gettimeofday(&(philo->time), NULL);
 }
 
 void	*philosopher(void *arg)
 {
 	t_philo	*philo;
-	long	current_time;
 	long	time_since_last_meal;
-
+	struct timeval x;
+	// int		alive = 10;
 	philo = arg;
 	while (1)
 	{
-		think(philo->id);
-		pick_up_fork(philo->left_fork, philo->id);
-		pick_up_fork(philo->right_fork, philo->id);
-		eat(philo->id);
-		usleep(philo->time_to_eat);
+		think(philo->id, philo->time);
+		pick_up_fork(philo->left_fork, philo->id, philo->time);
+		pick_up_fork(philo->right_fork, philo->id, philo->time);
+		eat(philo->id, philo->time);
+		usleep(philo->time_to_eat * 1000);
 		put_down_fork(philo->left_fork);
 		put_down_fork(philo->right_fork);
 		gettimeofday(&(philo->last_meal), NULL);
-		usleep(philo->time_to_sleep);
-		printf("%ld Philosopher %d is sleeping.\n", get_current_time(), philo->id);
-		current_time = get_current_time();
-		time_since_last_meal = current_time - (philo->last_meal.tv_sec * 1000000 + philo->last_meal.tv_usec);
+		usleep(philo->time_to_sleep * 1000);
+		printf("%ld Philosopher %d is sleeping.\n", get_current_time(philo->time), philo->id);
+		gettimeofday(&x, NULL);
+		time_since_last_meal = (x.tv_sec * 1000 + x.tv_usec / 1000) - (philo->last_meal.tv_sec * 1000 + philo->last_meal.tv_usec / 1000);
+		// printf("time_since_last_meal  = %ld\n", time_since_last_meal);
 		if (time_since_last_meal > philo->time_to_die)
 		{
-			printf("%ld Philosopher %d has died.\n", get_current_time(), philo->id);
+			printf("%ld Philosopher %d has died.\n", get_current_time(philo->time), philo->id);
 			break;
 		}
 	}
@@ -83,7 +84,7 @@ int	main(int argc, char **argv)
 	t_philo	philo[data.num_philosophers];
 	i = -1;
 	while (++i < data.num_philosophers)
-		init_philo(&philo[i], i, &forks[i], &forks[(i+1) % data.num_philosophers], data.time_to_die, data.time_to_eat, data.time_to_sleep);
+		init_philo(&philo[i], i, &forks[i], &forks[(i + 1) % data.num_philosophers], data.time_to_die, data.time_to_eat, data.time_to_sleep);
 	pthread_t thread[data.num_philosophers];
 	i = -1;
 	while (++i < data.num_philosophers)
