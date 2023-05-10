@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:28:06 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/08 17:18:39 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:22:52 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,28 @@ void	*philosopher(void *arg)
 	t_philo	*philo;
 	long	time_since_last_meal;
 	struct timeval x;
-	// int		alive = 10;
+
 	philo = arg;
 	while (1)
 	{
-		think(philo->id, philo->time);
-		pick_up_fork(philo->left_fork, philo->id, philo->time);
-		pick_up_fork(philo->right_fork, philo->id, philo->time);
+		usleep(100);
+		gettimeofday(&(philo->last_meal), NULL);
+		pick_up_fork(philo->left_fork, philo->right_fork, philo->id, philo->time);
 		eat(philo->id, philo->time);
 		usleep(philo->time_to_eat * 1000);
 		put_down_fork(philo->left_fork);
 		put_down_fork(philo->right_fork);
-		gettimeofday(&(philo->last_meal), NULL);
+		printf("[%ld] Philosopher %d is sleeping.\n", get_current_time(philo->time), philo->id);
 		usleep(philo->time_to_sleep * 1000);
-		printf("%ld Philosopher %d is sleeping.\n", get_current_time(philo->time), philo->id);
 		gettimeofday(&x, NULL);
 		time_since_last_meal = (x.tv_sec * 1000 + x.tv_usec / 1000) - (philo->last_meal.tv_sec * 1000 + philo->last_meal.tv_usec / 1000);
 		// printf("time_since_last_meal  = %ld\n", time_since_last_meal);
-		if (time_since_last_meal > philo->time_to_die)
+		if (time_since_last_meal >= philo->time_to_die)
 		{
-			printf("%ld Philosopher %d has died.\n", get_current_time(philo->time), philo->id);
+			printf("[%ld] Philosopher %d has died.\n", get_current_time(philo->time), philo->id);
 			break;
 		}
+		think(philo->id, philo->time);
 	}
 	pthread_exit(NULL);
 }
