@@ -6,7 +6,7 @@
 #    By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 14:13:45 by avancoll          #+#    #+#              #
-#    Updated: 2023/05/04 15:30:09 by avancoll         ###   ########.fr        #
+#    Updated: 2023/05/10 16:11:54 by avancoll         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = philo
 
 SRCS =	philo.c\
 		utils.c\
-		action.c
+		action.c\
+		init.c
 
 
 OBJS		= $(SRCS:.c=.o)
