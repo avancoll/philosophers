@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:01:08 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/10 17:07:54 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:28:35 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	init_data(t_data *data, char **argv)
 
 void	init_philo(t_philo *philo, int id, pthread_mutex_t *forks, t_data data)
 {
-	philo->id = id;
-	philo->left_fork = &forks[id];
-	philo->right_fork = &forks[(id + 1) % data.num_philosophers];
-	philo->time_to_die = data.time_to_die;
-	philo->time_to_eat = data.time_to_eat;
-	philo->time_to_sleep = data.time_to_sleep;
-	gettimeofday(&(philo->last_meal), NULL);
-	gettimeofday(&(philo->start_time), NULL);
+	philo[id].id = id;
+	philo[id].left_fork = &forks[id];
+	philo[id].right_fork = &forks[(id + 1) % data.num_philosophers];
+	philo[id].death = philo->death;
+	philo[id].time_to_die = data.time_to_die;
+	philo[id].time_to_eat = data.time_to_eat;
+	philo[id].time_to_sleep = data.time_to_sleep;
+	gettimeofday(&(philo[id].last_meal), NULL);
+	gettimeofday(&(philo[id].start_time), NULL);
 }
