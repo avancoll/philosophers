@@ -96,27 +96,47 @@ int	init_philo(t_table *table)
 		table->philo[i].last_eat = 0;
 		table->philo[i].left_fork = &table->forks[i];
 		table->philo[i].right_fork = &table->forks[(i + 1) % table->nb_philo];
+		table->philo[i].table = table;
 	}
 	return (0);
 }
 
 void	*routine(void *arg)
 {
-	t_table	*table;
-	int		id;
+	t_philo			*philo;
+	struct timeval	current_time;
 
-	table = arg;
-	if (!(id & 1))
+	philo = arg;
+	if (!(philo->id & 1))
 		usleep(100);
+	while (1)
+	{
+		gettimeofday(&(philo->last_eat), NULL);
+		pick_up_fork(philo->left_fork, philo->right_fork, philo->id);
+		ft_eat(philo->id, philo->table->time_to_eat);
+		put_down_fork(philo->left_fork, philo->right_fork);
+		ft_sleep(philo->id, philo->table->time_to_sleep);
+		gettimeofday(&current_time, NULL);
+		if ((current_time.tv_sec * 1000 + current_time.tv_usec / 1000) - (philo->last_eat.tv_sec * 1000 + philo->last_eat.tv_usec / 1000) >= philo->table->time_to_die)
+		{
+			printf("[%ld] Philosopher %d has died.\n", current_time.tv_sec * 1000 + current_time.tv_usec / 1000, philo->id + 1);
+			break;
+		}
+		ft_think(philo->id);
+
+
+	}
 	return (0);
 }
 
 int	init_thread(t_table *table)
 {
 	int	i;
+
 	i = -1;
+	gettimeofday(&(table->start_time), NULL);
 	while (++i < table->nb_philo)
-		pthread_create(&(table->thread[i]), NULL, routine, table);
+		pthread_create(&(table->thread[i]), NULL, routine, &table->philo[i]);
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_join(table->thread[i], NULL);

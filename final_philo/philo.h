@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 14:17:08 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/17 16:43:33 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:06:58 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,22 @@
 # include <sys/time.h> // gettimeofday
 # include <pthread.h> // pthread_create, pthread_detach, pthread_join, pthread_mutex_init, pthread_mutex_destroy, pthread_mutex_lock, pthread_mutex_unlock
 
+typedef struct s_table t_table;
 
 typedef struct s_philo
 {
 	int				id;
 	int				nb_eat;
-	long long		last_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	print;
+	t_table			*table;
+	struct timeval	last_eat;
 }	t_philo;
 
-typedef struct s_table
+struct s_table
 {
 	t_philo			*philo;
-	// pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
 	pthread_t		*thread;
 	int				nb_philo;
@@ -42,9 +43,8 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_eat;
-	int				start;
 	int				check_death;
-	long long		start_time;
-}	t_table;
+	struct timeval	start_time;
+};
 
 #endif
