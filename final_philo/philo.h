@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 14:17:08 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/17 17:06:58 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:49:42 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_philo
 	int				nb_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	print;
 	t_table			*table;
 	struct timeval	last_eat;
 }	t_philo;
@@ -38,6 +37,7 @@ struct s_table
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_t		*thread;
+	pthread_mutex_t	*print;
 	int				nb_philo;
 	int				time_to_die;
 	int				time_to_eat;
