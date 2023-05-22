@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 17:03:17 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:31:47 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int	init_thread(t_table *table)
 	i = -1;
 	gettimeofday(&(table->start_time), NULL);
 	while (++i < table->nb_philo)
-	{
-		if (pthread_create(&(table->thread[i]), NULL, routine, &table->philo[i]))
-			return (1);
-	}
+		pthread_create(&(table->thread[i]), NULL, routine, &table->philo[i]);
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_join(table->thread[i], NULL);
