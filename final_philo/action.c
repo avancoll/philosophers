@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 17:58:59 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:07:18 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,25 @@ void	action_printer(t_philo *philo, int action)
 
 	time = get_time(philo->table->start_time);
 	pthread_mutex_lock(philo->table->print);
-	if (action == 0 && philo->table->check_death == 0)
+	if (philo->table->check_death == 0 && (philo->nb_ate < philo->table->nb_eat
+			|| philo->table->nb_eat == -1))
 	{
-		printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
-		printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
-		printf("[%ld] %d is eating.\n", time, philo->id + 1);
-	}
-	else if (action == 1 && philo->table->check_death == 0)
-		printf("[%ld] %d is sleeping.\n", time, philo->id + 1);
-	else if (action == 2 && philo->table->check_death == 0)
-		printf("[%ld] %d is thinking.\n", time, philo->id + 1);
-	else if (action == 3 && philo->table->check_death == 0)
-	{
-		philo->table->check_death = 1;
-		printf("[%ld] %d died.\n", time, philo->id + 1);
+		if (action == 0)
+		{
+			printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
+			printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
+			printf("[%ld] %d is eating.\n", time, philo->id + 1);
+			philo->nb_ate++;
+		}
+		else if (action == 1)
+			printf("[%ld] %d is sleeping.\n", time, philo->id + 1);
+		else if (action == 2)
+			printf("[%ld] %d is thinking.\n", time, philo->id + 1);
+		else if (action == 3)
+		{
+			philo->table->check_death = 1;
+			printf("[%ld] %d died.\n", time, philo->id + 1);
+		}
 	}
 	pthread_mutex_unlock(philo->table->print);
 }
@@ -44,7 +49,8 @@ void	*routine(void *arg)
 	philo = arg;
 	if (!(philo->id & 1))
 		usleep(100);
-	while (philo->table->check_death == 0)
+	while (philo->table->check_death == 0 && (philo->nb_ate
+			< philo->table->nb_eat || philo->table->nb_eat == -1))
 	{
 		gettimeofday(&(philo->last_eat), NULL);
 		pthread_mutex_lock(philo->left_fork);
@@ -57,10 +63,7 @@ void	*routine(void *arg)
 		usleep(philo->table->time_to_sleep * 1000);
 		gettimeofday(&current_time, NULL);
 		if (get_time(philo->last_eat) >= philo->table->time_to_die)
-		{
 			action_printer(philo, 3);
-			break ;
-		}
 		action_printer(philo, 2);
 	}
 	return (0);

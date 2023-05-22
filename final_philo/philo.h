@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 17:33:06 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:26:54 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_table	t_table;
 typedef struct s_philo
 {
 	int				id;
-	int				nb_eat;
+	int				nb_ate;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_table			*table;
