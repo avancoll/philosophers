@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 14:17:08 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/17 18:49:42 by avancoll         ###   ########.fr       */
+/*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
+/*   Updated: 2023/05/22 17:02:31 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -44,7 +45,24 @@ struct s_table
 	int				time_to_sleep;
 	int				nb_eat;
 	int				check_death;
+	int				error;
 	struct timeval	start_time;
 };
+
+int		init_data(t_table *table, char **argv);
+int		init_philo(t_table *table);
+int		init_thread(t_table *table);
+void	*routine(void *arg);
+int		ft_atoi(char *s, t_table *table);
+int		ft_check_death(t_table *table);
+int		ft_check_eat(t_table *table);
+long	get_time(struct timeval start_time);
+void	death(t_philo *philo);
+void	pick_up_fork(t_philo *philo);
+void	put_down_fork(t_philo *philo);
+void	ft_think(t_philo *philo);
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	action_printer(t_philo *philo, int action);
 
 #endif
