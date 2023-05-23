@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 18:26:54 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:35:53 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	ft_think(t_philo *philo);
 void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	action_printer(t_philo *philo, int action);
+void	ft_usleep(int ms);
 
 #endif

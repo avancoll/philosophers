@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:03 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 17:33:18 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:36:06 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,15 @@ int	ft_atoi(char *s, t_table *table)
 	if ((s[i] && (s[i] < '0' || s[i] > '9')) || (res > 2147483647))
 		table->error = 1;
 	return (res);
+}
+
+void	ft_usleep(int ms)
+{
+	long	start;
+	struct timeval start_time;
+
+	gettimeofday(&start_time, NULL);
+	start = get_time(start_time);
+	while (get_time(start_time) - start < ms)
+		usleep(100);
 }

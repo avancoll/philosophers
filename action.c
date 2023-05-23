@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/22 19:07:18 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:39:28 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ void	*routine(void *arg)
 	while (philo->table->check_death == 0 && (philo->nb_ate
 			< philo->table->nb_eat || philo->table->nb_eat == -1))
 	{
-		gettimeofday(&(philo->last_eat), NULL);
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(philo->right_fork);
 		action_printer(philo, 0);
-		usleep(philo->table->time_to_eat * 1000);
+		gettimeofday(&(philo->last_eat), NULL);
+		ft_usleep(philo->table->time_to_eat);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		action_printer(philo, 1);
-		usleep(philo->table->time_to_sleep * 1000);
+		ft_usleep(philo->table->time_to_sleep);
 		gettimeofday(&current_time, NULL);
 		if (get_time(philo->last_eat) >= philo->table->time_to_die)
 			action_printer(philo, 3);
