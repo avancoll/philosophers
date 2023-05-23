@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 14:37:43 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:11:33 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ int	init_thread(t_table *table)
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_create(&(table->thread[i]), NULL, routine, &table->philo[i]);
-	while (1)
-		if (table->check_death)
-			break;
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_join(table->thread[i], NULL);

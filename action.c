@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 14:39:28 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:41:52 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	action_printer(t_philo *philo, int action)
 void	*routine(void *arg)
 {
 	t_philo			*philo;
-	struct timeval	current_time;
 
 	philo = arg;
 	if (!(philo->id & 1))
@@ -60,8 +59,7 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		action_printer(philo, 1);
-		ft_usleep(philo->table->time_to_sleep);
-		gettimeofday(&current_time, NULL);
+		ft_usleep_test(philo->table, philo->table->time_to_sleep);
 		if (get_time(philo->last_eat) >= philo->table->time_to_die)
 			action_printer(philo, 3);
 		action_printer(philo, 2);
