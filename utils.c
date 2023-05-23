@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:03 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 15:41:24 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:57:36 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_usleep(int ms)
 		usleep(100);
 }
 
-void	ft_usleep_test(t_table *table, int ms)
+void	ft_usleep_test(t_philo *philo, int ms)
 {
 	long	start;
 	struct timeval start_time;
@@ -64,8 +64,11 @@ void	ft_usleep_test(t_table *table, int ms)
 	start = get_time(start_time);
 	while (get_time(start_time) - start < ms)
 	{
-		if (get_time(table->philo->last_eat) >= table->time_to_die)
+		if (get_time(philo->last_eat) >= philo->table->time_to_die)
+		{
+			action_printer(philo, 3);
 			return ;
+		}
 		usleep(100);
 	}
 }

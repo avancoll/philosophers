@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 15:11:33 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:29:13 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	init_philo(t_table *table)
 		table->philo[i].left_fork = &table->forks[i];
 		table->philo[i].right_fork = &table->forks[(i + 1) % table->nb_philo];
 		table->philo[i].table = table;
+		table->philo[i].last_eat = table->start_time;
 	}
 	return (0);
 }
@@ -60,6 +61,19 @@ int	init_thread(t_table *table)
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_create(&(table->thread[i]), NULL, routine, &table->philo[i]);
+	while (1)
+	{
+		i = -1;
+		while (++i < table->nb_philo)
+		{
+			if (get_time(table->philo[i].last_eat) >= table->time_to_die)
+			{
+				action_printer(&table->philo[i], 3);
+				table->check_death = 1;
+				return (0);
+			}
+		}
+	}
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_join(table->thread[i], NULL);
