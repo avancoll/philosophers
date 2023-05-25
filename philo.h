@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 16:09:14 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:51:52 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,14 @@ struct s_table
 int		init_data(t_table *table, char **argv);
 int		init_philo(t_table *table);
 int		init_thread(t_table *table);
-void	*routine(void *arg);
-int		ft_atoi(char *s, t_table *table);
-int		ft_check_eat(t_table *table);
 long	get_time(struct timeval start_time);
-void	death(t_philo *philo);
-void	pick_up_fork(t_philo *philo);
-void	put_down_fork(t_philo *philo);
-void	ft_think(t_philo *philo);
-void	ft_eat(t_philo *philo);
-void	ft_sleep(t_philo *philo);
-void	action_printer(t_philo *philo, int action);
+int		ft_atoi(char *s, t_table *table);
 void	ft_usleep(t_philo *philo, int ms);
-int		free_all(t_table *table);
+void	eat(t_philo *philo, long time);
+void	action_printer(t_philo *philo, int action);
+void	*routine(void *arg);
+int		free_table(t_table *table);
 int		ft_error(t_table *table, int errnum);
+int		free_all(t_table *table);
 
 #endif

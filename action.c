@@ -6,11 +6,20 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 16:10:16 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:50:09 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	eat(t_philo *philo, long time)
+{
+	gettimeofday(&(philo->last_eat), NULL);
+	printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
+	printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
+	printf("[%ld] %d is eating.\n", time, philo->id + 1);
+	philo->nb_ate++;
+}
 
 void	action_printer(t_philo *philo, int action)
 {
@@ -24,12 +33,7 @@ void	action_printer(t_philo *philo, int action)
 	{
 		pthread_mutex_unlock(philo->table->death);
 		if (action == 0)
-		{
-			printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
-			printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
-			printf("[%ld] %d is eating.\n", time, philo->id + 1);
-			philo->nb_ate++;
-		}
+			eat(philo, time);
 		else if (action == 1)
 			printf("[%ld] %d is sleeping.\n", time, philo->id + 1);
 		else if (action == 2)
@@ -61,7 +65,6 @@ void	*routine(void *arg)
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(philo->right_fork);
 		action_printer(philo, 0);
-		gettimeofday(&(philo->last_eat), NULL);
 		ft_usleep(philo, philo->table->time_to_eat);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
