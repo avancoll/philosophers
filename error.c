@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:19:04 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 12:22:54 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:46:20 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	free_table(t_table *table)
 		free(table->thread);
 	if (table->print)
 		free(table->print);
+	if (table->death)
+		free(table->death);
 	return (0);
 }
 

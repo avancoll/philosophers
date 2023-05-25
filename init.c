@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 16:45:16 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:46:08 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	init_philo(t_table *table)
 	table->print = malloc(sizeof(pthread_mutex_t));
 	table->death = malloc(sizeof(pthread_mutex_t));
 	table->thread = malloc(sizeof(pthread_t) * table->nb_philo);
-	if (!table->philo || !table->forks || !table->print || !table->thread)
+	if (!table->philo || !table->forks || !table->print
+		|| !table->thread || !table->death)
 		return (1);
 	pthread_mutex_init(table->print, NULL);
 	pthread_mutex_init(table->death, NULL);
