@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 16:09:00 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:45:16 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,5 @@ int	init_thread(t_table *table)
 			}
 		}
 	}
-	i = -1;
-	while (++i < table->nb_philo)
-		pthread_join(table->thread[i], NULL);
-	free_all(table);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:02:20 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 12:22:56 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:45:47 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_table	table;
+	int		i;
 
 	if (argc != 5 && argc != 6)
 		return (ft_error(NULL, 0));
@@ -30,5 +31,9 @@ int	main(int argc, char **argv)
 		return (ft_error(&table, 2));
 	if (init_thread(&table))
 		return (ft_error(&table, 3));
+	i = -1;
+	while (++i < table.nb_philo)
+		pthread_join(table.thread[i], NULL);
+	free_all(&table);
 	return (0);
 }
