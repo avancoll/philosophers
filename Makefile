@@ -6,7 +6,7 @@
 #    By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 14:13:45 by avancoll          #+#    #+#              #
-#    Updated: 2023/05/25 12:35:18 by avancoll         ###   ########.fr        #
+#    Updated: 2023/05/25 16:11:33 by avancoll         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS		= $(SRCS:.c=.o)
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=thread -g
+CFLAGS		= -Wall -Wextra -Werror #-fsanitize=thread -g
 
 THREAD = -lpthread
 

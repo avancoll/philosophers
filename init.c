@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:38 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 14:55:48 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:09:00 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ int	init_philo(t_table *table)
 	table->philo = malloc(sizeof(t_philo) * table->nb_philo);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nb_philo);
 	table->print = malloc(sizeof(pthread_mutex_t));
+	table->death = malloc(sizeof(pthread_mutex_t));
 	table->thread = malloc(sizeof(pthread_t) * table->nb_philo);
 	if (!table->philo || !table->forks || !table->print || !table->thread)
 		return (1);
 	pthread_mutex_init(table->print, NULL);
+	pthread_mutex_init(table->death, NULL);
 	while (++i < table->nb_philo)
 	{
 		pthread_mutex_init(&(table->forks[i]), NULL);
@@ -57,25 +59,29 @@ int	init_philo(t_table *table)
 int	init_thread(t_table *table)
 {
 	int	i;
+	int	check;
 
 	i = -1;
 	while (++i < table->nb_philo)
 		if (pthread_create(&(table->thread[i]), NULL, routine,
 				&table->philo[i]))
 			return (1);
-	// while (1)
-	// {
-	// 	i = -1;
-	// 	while (++i < table->nb_philo)
-	// 	{
-	// 		if (get_time(table->philo[i].last_eat) >= table->time_to_die)
-	// 		{
-	// 			// action_printer(&table->philo[i], 3);
-	// 			table->check_death = 1;
-	// 			return (0);
-	// 		}
-	// 	}
-	// }
+	check = 1;
+	while (check)
+	{
+		i = -1;
+		while (++i < table->nb_philo && check)
+		{
+			if (get_time(table->philo[i].last_eat) >= table->time_to_die)
+			{
+				action_printer(&table->philo[i], 3);
+				pthread_mutex_lock(table->death);
+				table->check_death = 1;
+				pthread_mutex_unlock(table->death);
+				check = 0;
+			}
+		}
+	}
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_join(table->thread[i], NULL);

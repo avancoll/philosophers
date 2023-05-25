@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 12:22:57 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:09:14 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct s_table
 	pthread_mutex_t	*forks;
 	pthread_t		*thread;
 	pthread_mutex_t	*print;
+	pthread_mutex_t	*death;
 	int				nb_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -52,7 +53,6 @@ int		init_philo(t_table *table);
 int		init_thread(t_table *table);
 void	*routine(void *arg);
 int		ft_atoi(char *s, t_table *table);
-int		ft_check_death(t_table *table);
 int		ft_check_eat(t_table *table);
 long	get_time(struct timeval start_time);
 void	death(t_philo *philo);

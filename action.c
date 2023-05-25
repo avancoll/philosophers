@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 12:48:09 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:10:16 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	action_printer(t_philo *philo, int action)
 
 	time = get_time(philo->table->start_time);
 	pthread_mutex_lock(philo->table->print);
+	pthread_mutex_lock(philo->table->death);
 	if (philo->table->check_death == 0 && (philo->nb_ate < philo->table->nb_eat
 			|| philo->table->nb_eat == -1))
 	{
+		pthread_mutex_unlock(philo->table->death);
 		if (action == 0)
 		{
 			printf("[%ld] %d has taken a fork.\n", time, philo->id + 1);
@@ -34,11 +36,14 @@ void	action_printer(t_philo *philo, int action)
 			printf("[%ld] %d is thinking.\n", time, philo->id + 1);
 		else if (action == 3)
 		{
+			pthread_mutex_lock(philo->table->death);
 			philo->table->check_death = 1;
+			pthread_mutex_unlock(philo->table->death);
 			printf("[%ld] %d died.\n", time, philo->id + 1);
 		}
 	}
 	pthread_mutex_unlock(philo->table->print);
+	pthread_mutex_unlock(philo->table->death);
 }
 
 void	*routine(void *arg)
@@ -48,9 +53,11 @@ void	*routine(void *arg)
 	philo = arg;
 	if (!(philo->id & 1))
 		usleep(100);
+	pthread_mutex_lock(philo->table->death);
 	while (philo->table->check_death == 0 && (philo->nb_ate
 			< philo->table->nb_eat || philo->table->nb_eat == -1))
 	{
+		pthread_mutex_unlock(philo->table->death);
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(philo->right_fork);
 		action_printer(philo, 0);
@@ -63,6 +70,8 @@ void	*routine(void *arg)
 		if (get_time(philo->last_eat) >= philo->table->time_to_die)
 			action_printer(philo, 3);
 		action_printer(philo, 2);
+		pthread_mutex_lock(philo->table->death);
 	}
+	pthread_mutex_unlock(philo->table->death);
 	return (0);
 }
