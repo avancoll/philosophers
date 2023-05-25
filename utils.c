@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:09:03 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 17:57:36 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:49:35 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,10 @@ int	ft_atoi(char *s, t_table *table)
 	return (res);
 }
 
-void	ft_usleep(int ms)
+void	ft_usleep(t_philo *philo, int ms)
 {
-	long	start;
-	struct timeval start_time;
-
-	gettimeofday(&start_time, NULL);
-	start = get_time(start_time);
-	while (get_time(start_time) - start < ms)
-		usleep(100);
-}
-
-void	ft_usleep_test(t_philo *philo, int ms)
-{
-	long	start;
-	struct timeval start_time;
+	long			start;
+	struct timeval	start_time;
 
 	gettimeofday(&start_time, NULL);
 	start = get_time(start_time);

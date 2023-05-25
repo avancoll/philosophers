@@ -6,14 +6,13 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:54 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 16:15:25 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:22:57 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <string.h> //memset
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -63,6 +62,8 @@ void	ft_think(t_philo *philo);
 void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	action_printer(t_philo *philo, int action);
-void	ft_usleep_test(t_philo *philo, int ms);
-void	ft_usleep(int ms);
+void	ft_usleep(t_philo *philo, int ms);
+int		free_all(t_table *table);
+int		ft_error(t_table *table, int errnum);
+
 #endif

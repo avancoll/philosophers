@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/23 16:16:43 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:48:09 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	*routine(void *arg)
 		pthread_mutex_lock(philo->right_fork);
 		action_printer(philo, 0);
 		gettimeofday(&(philo->last_eat), NULL);
-		ft_usleep_test(philo, philo->table->time_to_eat);
+		ft_usleep(philo, philo->table->time_to_eat);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		action_printer(philo, 1);
-		ft_usleep_test(philo, philo->table->time_to_sleep);
+		ft_usleep(philo, philo->table->time_to_sleep);
 		if (get_time(philo->last_eat) >= philo->table->time_to_die)
 			action_printer(philo, 3);
 		action_printer(philo, 2);
