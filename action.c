@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 16:05:39 by avancoll          #+#    #+#             */
-/*   Updated: 2023/05/25 16:50:09 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:50:26 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*routine(void *arg)
 
 	philo = arg;
 	if (!(philo->id & 1))
-		usleep(100);
+		usleep(philo->table->time_to_eat * 1000);
 	pthread_mutex_lock(philo->table->death);
 	while (philo->table->check_death == 0 && (philo->nb_ate
 			< philo->table->nb_eat || philo->table->nb_eat == -1))
